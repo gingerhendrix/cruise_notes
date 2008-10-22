@@ -1,0 +1,20 @@
+class DocumentationController &lt; ApplicationController
+  caches_page :get
+
+  def get
+    path = File.join('documentation', params[:path])
+
+    if path == "documentation/plugin_repositories"
+      render :template => path, :layout => false
+    elsif template_exists?(path)
+      render :template => path
+    elsif template_exists?(path + '/index')
+      render :template => path + '/index'
+    else
+      render :status => 404, :text => 'Documentation page not found'
+    end
+  end
+
+  ...
+  
+end

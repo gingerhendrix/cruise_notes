@@ -1,0 +1,13 @@
+---
+name : Projects
+singleton_methods :
+  - name: find
+    tags: [associations]
+
+  - name: load_all
+    tags: [init]
+
+  - name: load_project
+    tags: [init]
+
+

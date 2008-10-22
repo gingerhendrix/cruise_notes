@@ -1,0 +1,32 @@
+--- 
+name: PollingScheduler
+instance_methods: 
+- name: build_request_checking_interval
+  tags: []
+
+- name: check_build_request_until_next_polling
+  tags: []
+
+- name: clean_last_build_loop_error
+  tags: []
+
+- name: last_logged_less_than_an_hour_ago
+  tags: []
+
+- name: log_error
+  tags: []
+
+- name: polling_interval
+  tags: []
+
+- name: polling_interval=
+  tags: []
+
+- name: run
+  tags: [builder]
+
+- name: same_error_as_before
+  tags: []
+
+singleton_methods: []
+

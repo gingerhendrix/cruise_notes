@@ -1,0 +1,59 @@
+--- 
+name: Subversion
+instance_methods: 
+- name: check_externals
+  tags: [scm]
+
+- name: check_externals=
+  tags: []
+
+- name: checkout
+  tags: [scm]
+
+- name: clean_checkout
+  tags: [scm]
+
+- name: error_log
+  tags: []
+
+- name: externals
+  tags: []
+
+- name: last_locally_known_revision
+  tags: []
+
+- name: latest_revision
+  tags: [scm]
+
+- name: password
+  tags: []
+
+- name: password=
+  tags: []
+
+- name: path
+  tags: []
+
+- name: path=
+  tags: []
+
+- name: up_to_date?
+  tags: [scm]
+
+- name: update
+  tags: [scm]
+
+- name: url
+  tags: []
+
+- name: url=
+  tags: []
+
+- name: username
+  tags: []
+
+- name: username=
+  tags: []
+
+singleton_methods: []
+

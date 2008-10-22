@@ -1,0 +1,55 @@
+div#toc {
+ width: 240px;
+ line-height: 110%;
+ margin-left: 720px;
+ position: fixed;
+}
+
+div#toc a {
+ display: list-item;
+ margin-left: 16px;
+ font-size: 13px;
+ line-height: 150%;
+ color: #000;
+ text-decoration: none;
+}
+
+div#toc a.indent {
+ margin-left: 3em;
+ font-size: 12px;
+}
+
+div#toc a.extraindent {
+ margin-left: 4em;
+ font-size: 11px;
+}
+
+
+div#innertoc {
+ border: 1px solid #999999;
+ border-width: 1px 0;
+ padding: 10px 0;
+ padding-bottom: 25px;
+ background-color: #ffffff;
+ display: block;
+}
+
+#toccontainer {
+  margin-bottom: 20px;
+}
+
+span#contentheader {
+ cursor: pointer;
+ float: right;
+ font-size: 13px;
+ margin-top: -10px;
+}
+
+#expand_snippets, #collapse_snippets {
+  display: block;
+  color: #3333aa;
+  font-size: 13px;
+  cursor: pointer;
+  padding-left: 20px;
+  
+}

@@ -1,0 +1,12 @@
+Project.configure do |project|
+  
+  project.email_notifier.emails = ['email1@your.site', 'email2@your.site']
+  project.email_notifier.from = 'john@doe.com'
+
+  project.rake_task = 'custom'
+
+  project.build_command = 'build_my_app.sh'
+
+  project.scheduler.polling_interval = 5.minutes
+
+end

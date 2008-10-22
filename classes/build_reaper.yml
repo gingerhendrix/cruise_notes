@@ -1,0 +1,22 @@
+--- 
+name: BuildReaper
+instance_methods: 
+- name: build_finished
+  tags: [plugins]
+
+- name: delete_all_builds_but
+  tags: []
+
+- name: number_of_builds_to_keep
+  tags: []
+
+- name: number_of_builds_to_keep=
+  tags: []
+
+singleton_methods: 
+- name: number_of_builds_to_keep
+  tags: []
+
+- name: number_of_builds_to_keep=
+  tags: []
+

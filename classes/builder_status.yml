@@ -1,0 +1,38 @@
+--- 
+name: BuilderStatus
+instance_methods: 
+- name: build_finished
+  tags: [plugins]
+
+- name: build_initiated
+  tags: [plugins]
+
+- name: build_loop_failed
+  tags: [plugins]
+
+- name: build_requested
+  tags: [plugins]
+
+- name: error_message
+  tags: []
+
+- name: fatal?
+  tags: []
+
+- name: polling_source_control
+  tags: [plugins]
+
+- name: queued
+  tags: [plugins]
+
+- name: sleeping
+  tags: [plugins]
+
+- name: status
+  tags: []
+
+- name: timed_out
+  tags: [plugins]
+
+singleton_methods: []
+

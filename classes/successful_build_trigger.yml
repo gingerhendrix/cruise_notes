@@ -1,0 +1,26 @@
+--- 
+name: SuccessfulBuildTrigger
+instance_methods: 
+- name: ==
+  tags: []
+
+- name: build_necessary?
+  tags: [trigger]
+
+- name: last_successful_build
+  tags: []
+
+- name: triggered_project
+  tags: []
+
+- name: triggered_project=
+  tags: []
+
+- name: triggering_project_name
+  tags: []
+
+- name: triggering_project_name=
+  tags: []
+
+singleton_methods: []
+

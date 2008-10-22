@@ -1,0 +1,107 @@
+--- 
+name: Build
+instance_methods: 
+- name: abort
+  tags: []
+
+- name: additional_artifacts
+  tags: []
+
+- name: artifact
+  tags: []
+
+- name: artifacts_directory
+  tags: []
+
+- name: brief_error
+  tags: []
+
+- name: build_status
+  tags: []
+
+- name: changeset
+  tags: []
+
+- name: clear_cache
+  tags: []
+
+- name: command
+  tags: []
+
+- name: contents_for_display
+  tags: []
+
+- name: destroy
+  tags: []
+
+- name: elapsed_time
+  tags: []
+
+- name: elapsed_time_in_progress
+  tags: []
+
+- name: error
+  tags: []
+
+- name: fail!
+  tags: []
+
+- name: failed?
+  tags: []
+
+- name: in_clean_environment_on_local_copy
+  tags: []
+
+- name: incomplete?
+  tags: []
+
+- name: label
+  tags: []
+
+- name: latest?
+  tags: []
+
+- name: output
+  tags: []
+
+- name: plugin_errors
+  tags: []
+
+- name: project
+  tags: []
+
+- name: project_settings
+  tags: []
+
+- name: rake
+  tags: []
+
+- name: rake_task
+  tags: []
+
+- name: revision
+  tags: []
+
+- name: run
+  tags: [builder]
+
+- name: seconds_since
+  tags: []
+
+- name: status
+  tags: []
+
+- name: successful?
+  tags: []
+
+- name: time
+  tags: []
+
+- name: to_param
+  tags: []
+
+- name: url
+  tags: []
+
+singleton_methods: []
+

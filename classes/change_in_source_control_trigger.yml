@@ -1,0 +1,8 @@
+--- 
+name: ChangeInSourceControlTrigger
+instance_methods: 
+- name: build_necessary?
+  tags: [trigger]
+
+singleton_methods: []
+

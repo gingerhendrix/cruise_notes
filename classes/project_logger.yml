@@ -1,0 +1,26 @@
+--- 
+name: ProjectLogger
+instance_methods: 
+- name: build_finished
+  tags: [plugins]
+
+- name: build_loop_failed
+  tags: [plugins]
+
+- name: build_started
+  tags: [plugins]
+
+- name: new_revisions_detected
+  tags: [plugins]
+
+- name: no_new_revisions_detected
+  tags: [plugins]
+
+- name: polling_source_control
+  tags: [plugins]
+
+- name: sleeping
+  tags: [plugins]
+
+singleton_methods: []
+

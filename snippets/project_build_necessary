@@ -1,0 +1,14 @@
+class Project
+  ...
+  
+  def build_necessary?(reasons)
+    if builds.empty?
+      reasons << "This is the first build"
+      true
+    else 
+      @triggers.any? {|t| t.build_necessary?(reasons) }
+    end
+  end
+  
+  ...
+end

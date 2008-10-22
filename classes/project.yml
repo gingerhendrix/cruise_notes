@@ -1,0 +1,180 @@
+---
+name : Project
+instance_methods :
+  - name: ==
+    tags: []
+
+  - name: add_plugin
+    tags: [plugins]
+
+  - name: build
+    tags: [builds]
+
+  - name: build_command
+    tags: [builder]
+
+  - name: build_command=
+    tags: [builder]
+
+  - name: build_if_necessary
+    tags: [builder]
+
+  - name: build_if_requested
+    tags: [builder]
+
+  - name: build_necessary?
+    tags: [builder, trigger]
+
+  - name: build_requested?
+    tags: [builder]
+
+  - name: build_requested_flag_file
+    tags: [builder]
+
+  - name: build_without_serialization
+    tags: [builder]
+
+  - name: builder_error_message
+    tags: [builder]
+
+  - name: builder_state_and_activity
+    tags: [builder]
+
+  - name: builds
+    tags: [builds]
+
+  - name: config_file_content
+    tags: [configuration]
+
+  - name: config_modified?
+    tags: [configuration]
+
+  - name: config_tracker
+    tags: [configuration]
+
+  - name: config_valid?
+    tags: [configuration]
+
+  - name: create_build
+    tags: [builds]
+
+  - name: do_clean_checkout
+    tags: [config]
+
+  - name: do_clean_checkout?
+    tags: [config]
+
+  - name: error_message
+    tags: [builder]
+
+  - name: find_build
+    tags: [builds]
+
+  - name: instantiate_plugins
+    tags: [init]
+
+  - name: last_build
+    tags: [builds]
+
+  - name: last_builds
+    tags: [builds]
+
+  - name: last_complete_build
+    tags: [builds]
+
+  - name: last_complete_build_status
+    tags: [builds]
+
+  - name: last_five_builds
+    tags: [builds]
+
+  - name: load_and_remember
+    tags: [init]
+
+  - name: load_config
+    tags: [init]
+
+  - name: load_timestamp
+    tags: [init]
+
+  - name: local_checkout
+    tags: [config]
+
+  - name: local_checkout=
+    tags: [config]
+
+  - name: log_changeset
+    tags: [builder]
+
+  - name: method_missing
+    tags: [plugins]
+
+  - name: name
+    tags: [config]
+
+  - name: next_build
+    tags: [builds]
+
+  - name: notify
+    tags: [plugins]
+
+  - name: path
+    tags: [config]
+
+  - name: path=
+    tags: [config]
+
+  - name: plugins
+    tags: [plugins]
+
+  - name: previous_build
+    tags: [builds]
+
+  - name: rake_task
+    tags: [config]
+
+  - name: rake_task=
+    tags: [config]
+
+  - name: request_build
+    tags: [builder]
+
+  - name: respond_to?
+    tags: [plugins]
+
+  - name: save_timestamp
+    tags: [builder]
+
+  - name: scheduler
+    tags: [builder]
+
+  - name: scheduler=
+    tags: [builder]
+
+  - name: settings
+    tags: [configuration]
+
+  - name: source_control
+    tags: [scm]
+
+  - name: source_control=
+    tags: [config]
+
+  - name: triggered_by
+    tags: [config, trigger]
+
+  - name: triggered_by=
+    tags: [config, trigger]
+
+  - name: update_project_to_revision
+    tags: [scm]
+singleton_methods: 
+- name: configure
+  tags: [init]
+
+- name: plugin
+  tags: [plugins]
+
+- name: read
+  tags: [init]
+

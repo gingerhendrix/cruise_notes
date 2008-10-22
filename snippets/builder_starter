@@ -1,0 +1,19 @@
+class BuilderStarter
+  ...  
+  
+  def self.begin_builder(project_name)
+    cruise_executable =
+        if Platform.interpreter =~ /jruby/
+          Platform.interpreter + ' ' + path_to_cruise
+        elsif Platform.family == 'mswin32'
+          "ruby #{path_to_cruise}"
+        else
+          path_to_cruise
+        end
+
+    verbose_option = $VERBOSE_MODE ? " --trace" : ""
+    command = "#{cruise_executable} build #{project_name}#{verbose_option}"
+
+    Platform.create_child_process(project_name, command)
+  end
+end

@@ -1,0 +1,17 @@
+class Project
+  ...
+  def update_project_to_revision(build, revision)
+    if do_clean_checkout?
+      File.open(build.artifact('source_control.log'), 'w') do |f| 
+        start = Time.now
+        f << "checking out build #{build.label}, this could take a while...\n"
+        @source_control.clean_checkout(revision, f)
+        f << "\ntook #{Time.now - start} seconds"
+      end
+    else
+      @source_control.update(revision)
+    end
+  end
+  
+  ...
+end

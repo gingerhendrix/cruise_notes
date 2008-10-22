@@ -1,0 +1,37 @@
+#!/usr/bin/env ruby
+
+load "#{File.dirname(__FILE__)}/lib/cruise_control/version.rb"
+
+def start
+  load "./script/server"
+end
+
+def add
+  load "./script/add_project"
+end
+
+def builder
+  load "./script/builder"
+end
+
+...
+
+def method_for_command(command)
+  case command
+  when 'start'                            then :start
+  when 'add'                              then :add
+  when 'build', 'builder'                 then :builder
+  when 'version', '-v', '--version'      then :version
+  when 'help', '-h', '--help', '/?', '-?' then :help
+  else nil
+  end
+end
+
+command = ARGV.shift
+if method_for_command(command)
+  require 'fileutils'
+  FileUtils.cd(File.dirname(__FILE__)) do 
+    self.send(method_for_command(command))
+  end
+...
+end

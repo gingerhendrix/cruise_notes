@@ -1,0 +1,97 @@
+body{
+  width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  text-algin: center;
+  font-family: arial, sans-serif;
+}
+
+textarea{
+  clear: both;
+}
+
+p.table_caption{
+  font-size: 13px;
+  margin-left: 10px;
+  color: #000;
+}
+
+p.caption{
+  font-size: 13px;
+  margin-left: 10px;
+  cursor: pointer;
+  color: #3333aa;
+}
+
+p.caption:hover{
+  text-decoration: underline;
+}
+
+img.expand_image{
+  padding-right: 8px;
+}
+
+p.content{
+
+}
+
+div.code_snippet{
+  display: none;
+}
+
+div.dp-Highlighter{
+  width: 938px;
+  margin-top: 0px;
+  margin-left: 20px;
+}
+
+table.controller_routes{
+  width: 100%;
+  margin-left: 20px;
+}
+
+table.controller_routes thead{
+  font-weight: bold;
+  font-size: 14px;
+}
+
+table.controller_routes thead tr td{
+  height: 2em;
+  line-height: 2em;
+}
+    
+table.controller_routes tbody{
+  font-family: monospace;
+}
+
+table.controller_routes td{
+  vertical-align: top
+}
+
+table.controller_routes ul{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#projects_model {
+  width: 240px;
+  border: 0;
+  outline: 0;
+  height: 1000px;
+  overflow: none;
+  margin-left: -220px;
+  position: absolute;
+}
+
+#projects_class_diagram{
+
+}
+
+#config_sequence_diagram{
+  display: block;
+  text-align: center;
+  width: 100%;
+  padding-top: 20px;
+} 
+

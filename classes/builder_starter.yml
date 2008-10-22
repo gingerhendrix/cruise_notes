@@ -1,0 +1,17 @@
+--- 
+name: BuilderStarter
+instance_methods: []
+
+singleton_methods: 
+- name: begin_builder
+  tags: []
+
+- name: path_to_cruise
+  tags: []
+
+- name: run_builders_at_startup=
+  tags: []
+
+- name: start_builders
+  tags: []
+

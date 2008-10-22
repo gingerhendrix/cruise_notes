@@ -1,0 +1,40 @@
+class Build
+  ...
+    
+  def run
+    build_log = artifact 'build.log'
+    File.open(artifact('cruise_config.rb'), 'w') {|f| f << @project.config_file_content }
+
+    begin
+      raise ConfigError.new(@project.error_message) unless @project.config_valid?
+      in_clean_environment_on_local_copy do
+        execute self.command, :stdout => build_log, :stderr => build_log
+      end
+      build_status.succeed!(seconds_since(@start))
+    rescue => e
+      if File.exists?(project.local_checkout + "/trunk")
+        msg = <<EOF
+
+WARNING:
+Directory #{project.local_checkout}/trunk exists.
+Maybe that's your APP_ROOT directory.
+Try to remove this project, then re-add it with correct APP_ROOT, e.g.
+
+rm -rf #{project.path}
+./cruise add #{project.name} svn://my.svn.com/#{project.name}/trunk
+EOF
+        File.open(build_log, 'a'){|f| f << msg }
+      end
+
+      File.open(build_log, 'a'){|f| f << e.message }
+      CruiseControl::Log.verbose? ? CruiseControl::Log.debug(e) : CruiseControl::Log.info(e.message)
+      if e.is_a?(CommandLine::ExecutionError) # i.e., the build returned a non-zero status code
+        fail!
+      else
+        fail!(e.message)
+      end
+    end
+  end
+  
+  ...
+end

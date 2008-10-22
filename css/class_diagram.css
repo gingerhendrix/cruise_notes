@@ -1,0 +1,37 @@
+
+.class_diagram{
+  width: 200px;
+  border: 1px solid black;
+  padding-bottom: 10px;
+  float: left;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+.class_diagram .class_name{
+  height: 40px;
+  font-size: 18px;
+  line-height: 40px;
+  padding-left: 8px;
+  padding-right: 8px;
+  overflow: hidden;
+  width: 184px;
+  font-family: arial;
+  border-bottom: 1px solid black;
+  margin-bottom: 10px;
+}
+
+.class_diagram .method{
+   padding-left: 8px;
+   display: block;
+   font-family: monospace;
+   font-size: 11px;
+   line-height: 14px;
+   overflow: hidden;
+   width: 184px;
+}
+
+.singleton_methods{
+  text-decoration: underline;
+}
+

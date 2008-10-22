@@ -1,0 +1,20 @@
+class Project
+  ...
+  
+  def self.read(dir, load_config = true)
+    @project_in_the_works = Project.new(File.basename(dir))
+    begin
+      @project_in_the_works.load_config if load_config
+      return @project_in_the_works
+    ensure
+      @project_in_the_works = nil
+    end
+  end
+  
+  def self.configure
+    raise 'No project is currently being created' unless @project_in_the_works
+    yield @project_in_the_works
+  end
+  
+  ...
+end

@@ -1,0 +1,16 @@
+--- 
+name: BuildSerializer
+instance_methods: 
+- name: serialize
+  tags: []
+
+- name: timeout
+  tags: []
+
+- name: wait
+  tags: []
+
+singleton_methods: 
+- name: serialize
+  tags: []
+

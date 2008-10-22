@@ -1,0 +1,284 @@
+<html>
+<head>
+  <link type="text/css" rel="stylesheet" href="js/dp.SyntaxHighlighter/Styles/SyntaxHighlighter.css"></link>
+  <link type="text/css" rel="stylesheet" href="css/notes.css"></link>
+  <link type="text/css" rel="stylesheet" href="css/class_diagram.css"></link>
+  <link type="text/css" rel="stylesheet" href="css/toc.css"></link>
+  <script src="js/notes.js"></script>
+</head>
+<body>
+
+<div id="toc">
+
+</div>  
+
+<h1>Cruise Control</h1>
+
+<p>From <a href="http://cruisecontrolrb.thoughtworks.com/">http://cruisecontrolrb.thoughtworks.com</a>:</p>
+<blockquote>CruiseControl.rb is a continuous integration tool. Its basic purpose in life is to alert members of a software project when one of them checks something into source control that breaks the build. 
+</blockquote>
+
+<p class="content">Cruise control consists of a set of scripts for adding new projects and building existing ones, and a Dashboard application to display the results of builds</p>
+<p class="content">This guide describes cruise control 1.3.0 
+<h2>Dashboard Rails App</h2>
+
+<img src="images/dashboard-screenshot.png" ></img>
+
+<p class="content">The Dashboard is a very simple Rails application, it has skinny controllers and well-factored views, and makes use of rails ajax capabilties, 
+rails caching, builder and erb.</p>
+<p class="content">As well as controllers for Projects and Builds, cruise control also serves its own documentation from the webapp.</p>
+
+<h3>DocumentationController</h3>
+
+<p class="content">The DocumentationController is a simple static controller it performs basic routing and caching</p>
+
+<%= code_snippet :file => 'documentation_routes', :caption => "Documentation Routes : routes.rb" %>
+<%= code_snippet :file => 'documentation_controller', :caption => "Documentation Controller : documentation_controller.rb" %>
+
+
+<h3>ProjectsController</h3>
+
+<table class="controller_routes">
+<thead>
+<tr>
+  <td>Action</td><td>Path</td><td>Model action</td><td>Views</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>index</td><td>/projects/</td><td>Projects.load_all</td><td>
+                                                              <ul>
+                                                                <li>html</li>
+                                                                <li>js</li>
+                                                                <li>rss</li>
+                                                                <li>cctray</li>
+                                                              </ul>
+                                                             </td>
+</tr>
+<tr>
+  <td>show</td><td>/projects/:id</td><td>Projects.find(:id)</td><td><ul>
+                                                                       <li>html => redirect /builds/:project_id</li>
+                                                                       <li>rss => projects/show_rss</li>
+                                                                    </ul>
+                                                                </td>
+</tr>                                                                
+<tr>
+  <td>code</td><td>/projects/:id/code/:path</td><td>Projects.find(:id)</td><td><ul><li> html => redirect /builds/:project_id</li></ul></td>
+</tr>
+<tr>
+  <td>build</td><td>/projects/:id/build</td><td>@project.request_build</td><td><ul><li>js => redirect /builds/:project_id</li></ul></td>                                                      
+</tr>
+</tbody>
+</table>
+
+
+<%= code_snippet :file => 'projects_routes', :caption => "Projects Routes : routes.rb" %>
+
+<h3>BuildsController</h3>
+
+<table class="controller_routes">
+<thead>
+<tr>
+  <td>Action</td><td>Path</td><td>Model action</td><td>Views</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>show</td><td>/builds/:project</td><td>@project.last_build</td><td>
+                                                              <ul>
+                                                                <li>html</li>
+                                                              </ul>
+                                                             </td>
+</tr>
+<tr>
+  <td>show</td><td>/builds/:project/:build</td><td>@project.find_build(:build)</td><td><ul>
+                                                                                       <li>html</li>
+                                                                                      </ul>
+                                                                                  </td>
+</tr>                                                                
+<tr>
+  <td>drop_down</td><td>/builds/older/:project</td><td>Projects.find(:id)</td><td><ul><li> html => drop_down.rhtml </li></ul></td>
+</tr>
+<tr>
+  <td>artifact</td><td>builds/:project/:build/*path</td><td>@project.find_build(:build)</td><td><ul><li>file => [build artifact]</li></ul></td>                                                      
+</tr>
+</tbody>
+</table>
+
+<%= code_snippet :file => 'builds_routes', :caption => "Builds Routes : routes.rb" %>
+
+<p class="content">
+The artifact action breaks the skinny controller rule, it may well be better to refactor this into a method on the builds model eg. Build::get_artifact(path)
+however this is complicated by the desire to handle directories differently.</p>
+
+<%= code_snippet :file => 'builds_controller_artifact', :caption => "Fat artifact method : builds_controller.rb" %>
+
+<h3>Views</h3>
+
+<p class="content">The views are very straightforward idomatic rails views.  
+  <ul>
+    <li>They use templates, and partials and helpers effectively to modularise the views and limit the amount of embedded ruby</li>
+    <li>RJS is used to provide asynchronous actions, which creates a better user experience</li>
+    <li>Builder is used to generate tidy and simple xml views</li>
+  </ul>
+</p>
+
+<%= code_snippet :file => 'default_template', :caption => "Partials used for modularisation : templates/default.rhtml" %>
+<%= code_snippet :file => 'project_view', :caption => "Helpers used for cleaner erb : projects/_project.rhtml" %>
+<%= code_snippet :file => 'project_form_remote_tag', :caption => "Asynchronous requests via form remote tag : projects/_project.rhtml" %>
+<%= code_snippet :file => 'project_index_js', :caption => "RJS Response : projects/index_js.rjs" %>
+<%= code_snippet :file => 'project_index_cctray', :caption => "Builder used for xml output : projects/index_cctray.rxml" %>
+
+<h2>Scripts and Daemon</h2>
+
+
+<p class="content">The cruise command is a simple shell script that delegates to one of the <code>server</code>, <code>add_project</code> or <code>builder</code> scripts depending on the command line arguments.
+</p>
+
+<p>
+  <ul>
+    <li><code>server</code> is just a simple wrapper around the rails builtin server script. It starts the dashboard rails app with mongrel.</li>
+    <li><code>add project</code> creates a new project with options passed on the command line</li>
+    <li><code>builder</code> builder runs a projects scheduler loop.  There can be many builders running at once.</li>
+  </ul>
+</p>
+
+<%= code_snippet :file => 'cruise', :caption => "cruise executable script : cruise" %>
+<%= code_snippet :file => 'add_project', :caption => "add_project script : scripts/add_project" %>
+<%= code_snippet :file => 'builder_script', :caption => "builder script : scripts/builder" %>
+
+
+<h2>The Model</h2>
+
+<p class="content">The meat and gravy of the application is in the model (as it should be).  There are three domain objects represented in the model - 
+<code>Project</code>, <code>Build</code> and <code>SCM</code> (source control manager).  The Project has many responsibilities including configuration, persistence and the build system.
+The project class delegates many of these reponsibilities to helper classes <code>BuilderStarter</code>, <code>BuilderStatus</code>, <code>PollingScheduler</code>, <code>ProjectConfigTracker</code>,
+and <code>BuildSerializer</code>.  Even with this refactoring the Project class is still over 500+ lines, further refactoring using delegates or mixins would 
+definitely help the code readability.</p>
+
+<img id="projects_class_diagram" src="images/projects_class_diagram.png" width="800" height="400"></img>
+
+<h3>Associations</h3>
+
+[TODO: Add a bit about Projects finder methods as well]
+<p class="content">Cruise control doesn't use Activerecord for persistence, instead it uses the filesystem.  A project is stored as a directory in the 
+[cruise data]/projects directory,  the project has a configuration file, a working copy of the source code, and a directory for each of the builds.</p>
+
+<%= class_diagram :class => 'projects', :tag => 'associations' %>
+<%= class_diagram :class => 'project', :tag => 'builds' %>
+<br style="clear: both"/>
+<%= code_snippet :file => 'project_builds', :caption => "Filesystem used to store associations : project.rb" %>
+
+<h3>Initialization</h3>
+
+<%= class_diagram :class => 'projects', :tag => 'init' %>
+<%= class_diagram :class => 'project', :tag => 'init' %>
+<br style="clear: both"/>
+
+<p class="content">On initialization the project loads the central configuration file and the local configuration file.  The configuration files are written
+ in ruby and are expected to use <code>Project.configure</code> to set configuration attributes on the project.  There is a clever trick here in setting a 
+ class variable to the current project on initialisation, this provides a means of accessing the current project in the configuration file</p>
+
+<%= code_snippet :file => 'project_init', :caption => "Initialisation method stores project reference : project.rb" %>
+<%= code_snippet :file => 'project_configure', :caption => "Example project configuration file : cruise_config.rb" %>
+ 
+ 
+<h3>The Build System</h3>
+
+<%= class_diagram :class => 'project', :tag => 'builder' %>
+<%= class_diagram :class => 'build', :tag => 'builder' %>
+<%= class_diagram :class => 'builder_starter' %>
+<%= class_diagram :class => 'polling_scheduler', :tag => 'builder' %>
+<%= class_diagram :class => 'build_serializer' %>
+<br style="clear: both"/>
+ 
+<p class="content">
+The controller can start a build by calling <code>request_build</code> on a project.  This method delegates starting the
+ build to the <code>BuilderStarter</code> class.  The build is started asynchronously by creating a new process which executes
+ the builder script.  The build request is stored in a flag file so that the build process is aware of the request.
+</p>
+
+<%= code_snippet :file => 'builder_starter', :caption => "Asynchronous build request : build_starter.rb" %>
+
+<p>The builder script runs the project's scheduler loop, which calls <code>build_if_necessary</code> or <code>build_if_requested</code> to start a build. 
+The build is started with the <code>build</code> method, which in turn delegates to <code>build_without_serialization</code> (serialization is performed by a 
+<code>BuildSerializer</code> if required). </p>
+
+<%= code_snippet :file => 'polling_scheduler', :caption => "Scheduler Loop : polling_scheduler.rb" %>
+
+<p>A <code>Build</code> object is created which controls the build and provides access to and persistence for results.  The <code>run</code> method creates 
+the appropriate environment and runs the project build command or rake task.</p>
+
+<%= code_snippet :file => 'build', :caption => "Build's run method : build.rb" %>
+
+
+<h3>Triggers</h3>
+
+<%= class_diagram :class => 'project', :tag => 'trigger' %>
+<%= class_diagram :class => 'change_in_source_control_trigger', :tag => 'trigger' %>
+<%= class_diagram :class => 'successful_build_trigger', :tag => 'trigger' %>
+<br style="clear: both"/>
+
+
+<p><code>build_necessary?</code> delegates to the projects triggers.  Triggers are simple objects which respond to <code>build_necessary?</code>. 
+Cruise control ships with two triggers <code>ChangeInSourceControlTrigger</code> and <code>SuccessfulBuildTrigger</code>.</p>
+
+
+<%= code_snippet :file => 'project_build_necessary', :caption => "build_necessary? method : project.rb" %>
+<%= code_snippet :file => 'change_in_source_control_trigger', :caption => "ChangeInSourceControlTrigger : change_in_source_control_trigger.rb" %>
+
+<h3>Plugins</h3>
+
+<%= class_diagram :class => 'project', :tag => 'plugins' %>
+<%= class_diagram :class => 'build_reaper', :tag => 'plugins' %>
+<%= class_diagram :class => 'email_notifier', :tag => 'plugins' %>
+<%= class_diagram :class => 'builder_status', :tag => 'plugins' %>
+<%= class_diagram :class => 'project_logger', :tag => 'plugins' %>
+<br style="clear: both"/>
+
+<p class="content">Each <code>project</code> has a set of <code>plugins</code> which are notified of events in the build sequence.  A plugin can respond to 
+these events by defining a method of the same name as the event. The set of possible events is dynamic and events are despatched from several places
+ including the <code>project</code> build methods, and the <code>triggers</code>.  Some of the events include
+</p>
+<ul>
+  <li><code>configuration_modified</code></li>
+  <li><code>build_initiated</code></li>
+  <li><code>build_started</code></li>
+  <li><code>build_finished</code></li>
+  <li><code>build_broken</code></li>
+  <li><code>build_fixed</code></li>
+  <li><code>build_requested</code></li>
+  <li><code>build_loop_failed</code></li>
+  <li><code>sleeping</code></li>
+</ul>
+
+
+<%= code_snippet :file => 'project_notify', :caption => "notify method : project.rb" %>
+<%= code_snippet :file => 'email_notifier', :caption => "E-mail notifier plugin : email_notifier.rb" %>
+
+<h3>Source Control</h3>
+
+<%= class_diagram :class => 'project', :tag => 'scm' %>
+<%= class_diagram :class => 'subversion', :tag => 'scm' %>
+<br style="clear: both"/>
+<p class="content">The build system interacts with the source control using three methods
+<code>latest_revision(project)</code>, <code>revisions_since(project, revision_number)</code> and <code>update(project, revision = nil)</code>.  
+The add project script also requires a <code>checkout(revision = nil)</code> method.</p>
+<p>Cruise Control currently ships with only a Subversion source control manager, but git and mercurial support are in the works and are available 
+from the projects git repository.</p>
+
+<%= code_snippet :file => 'project_update', :caption => "update_to_latest_revision method : project.rb" %>
+<%= code_snippet :file => 'subversion', :caption => "Subversion client : subversion.rb" %>
+
+
+
+<script class="javascript" src="js/dp.SyntaxHighlighter/Scripts/shCore.js"></script>
+<script class="javascript" src="js/dp.SyntaxHighlighter/Scripts/shBrushRuby.js"></script>
+<script class="javascript">
+dp.SyntaxHighlighter.HighlightAll('code');
+</script>
+
+</body>
+</html>
+
+

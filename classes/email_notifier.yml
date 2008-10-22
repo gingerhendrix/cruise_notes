@@ -1,0 +1,23 @@
+--- 
+name: EmailNotifier
+instance_methods: 
+- name: build_finished
+  tags: [plugins]
+
+- name: build_fixed
+  tags: [plugins]
+
+- name: emails
+  tags: []
+
+- name: emails=
+  tags: []
+
+- name: from
+  tags: []
+
+- name: from=
+  tags: []
+
+singleton_methods: []
+

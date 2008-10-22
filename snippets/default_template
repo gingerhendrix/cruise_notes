@@ -1,0 +1,16 @@
+<html>
+
+...
+
+<body>
+
+  <%= render :partial => '/layouts/header' %>
+
+  <div id="content">
+    <%= yield %>
+  </div>
+
+  <%= render :partial => '/layouts/footer' %>
+
+</body>
+</html>
