@@ -5,6 +5,11 @@
   <link type="text/css" rel="stylesheet" href="css/class_diagram.css"></link>
   <link type="text/css" rel="stylesheet" href="css/toc.css"></link>
   <script src="js/notes.js"></script>
+  
+  <script src="http://gandrew.com/mint/?js"></script>
+  
+  <title>Cruise Notes - gandrew.com</title>
+  
 </head>
 <body>
 
@@ -12,8 +17,12 @@
 
 </div>  
 
-<h1>Cruise Control</h1>
-
+<h1>Cruise Notes - A readers guide to Cruise Control</h1>
+<div class="subheader">
+  <span class="date">26<sup>th</sup> October 2008</span>
+  <span class="status">Final Draft</span>
+  
+</div>
 <p>From <a href="http://cruisecontrolrb.thoughtworks.com/">http://cruisecontrolrb.thoughtworks.com</a>:</p>
 <blockquote>CruiseControl.rb is a continuous integration tool. Its basic purpose in life is to alert members of a software project when one of them checks something into source control that breaks the build. 
 </blockquote>
@@ -152,7 +161,7 @@ however this is complicated by the desire to handle directories differently.</p>
 
 <p class="content">The meat and gravy of the application is in the model (as it should be).  There are three domain objects represented in the model - 
 <code>Project</code>, <code>Build</code> and <code>SCM</code> (source control manager).  The Project has many responsibilities including configuration, persistence and the build system.
-The project class delegates many of these reponsibilities to helper classes <code>BuilderStarter</code>, <code>BuilderStatus</code>, <code>PollingScheduler</code>, <code>ProjectConfigTracker</code>,
+The project class delegates many of these reponsibilities to helper classes including <code>BuilderStarter</code>, <code>BuilderStatus</code>, <code>PollingScheduler</code>, <code>ProjectConfigTracker</code>,
 and <code>BuildSerializer</code>.  Even with this refactoring the Project class is still over 500+ lines, further refactoring using delegates or mixins would 
 definitely help the code readability.</p>
 
@@ -160,9 +169,10 @@ definitely help the code readability.</p>
 
 <h3>Associations</h3>
 
-[TODO: Add a bit about Projects finder methods as well]
+
 <p class="content">Cruise control doesn't use Activerecord for persistence, instead it uses the filesystem.  A project is stored as a directory in the 
-[cruise data]/projects directory,  the project has a configuration file, a working copy of the source code, and a directory for each of the builds.</p>
+<code>[cruise data]/projects</code> directory,  the project has a configuration file, a working copy of the source code, and a directory for each of the builds.</p>
+<p>There are finder methods for Projects and Builds- these query the filesystem in order to locate the desired resource.</p>
 
 <%= class_diagram :class => 'projects', :tag => 'associations' %>
 <%= class_diagram :class => 'project', :tag => 'builds' %>

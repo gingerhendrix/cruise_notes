@@ -95,3 +95,17 @@ table.controller_routes ul{
   padding-top: 20px;
 } 
 
+h1{
+  margin-bottom: 0.5em;
+  font-size: 20pt;
+}
+
+div.subheader{
+  width: 700px;
+  margin-bottom: 1em;
+}
+
+span.date, span.status{
+  display: block;
+  font-style: italic;
+}
